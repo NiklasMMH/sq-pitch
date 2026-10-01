@@ -21,7 +21,7 @@ html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--san
 #stage{--c:0;transition:--c 1800ms ease-in-out}
 #aur{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none}
 #par{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;will-change:transform}
-#motes{position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;mix-blend-mode:screen;pointer-events:none}
+#motes{position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;pointer-events:none}
 #mono{position:absolute;inset:0;z-index:3;pointer-events:none;-webkit-backdrop-filter:grayscale(1) contrast(1.05) brightness(1.02);backdrop-filter:grayscale(1) contrast(1.05) brightness(1.02);-webkit-mask-composite:source-in;mask-composite:intersect;transition:opacity 1.4s ease}
 #mono.off{opacity:0}
 #rings{position:absolute;inset:0;z-index:4;pointer-events:none}
@@ -86,16 +86,40 @@ html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--san
 .chips.on span{opacity:1;transform:none}
 .chips.on span:nth-child(2){transition-delay:.15s}.chips.on span:nth-child(3){transition-delay:.3s}
 
-/* objection */
-#obj{position:absolute;left:960px;top:300px;transform:translateX(-50%) scale(.8);opacity:0;transition:opacity .5s,transform .7s var(--spring);z-index:7}
-#obj.on{opacity:1;transform:translateX(-50%) scale(1)}
-#obj .bb{position:relative;padding:16px 26px;border-radius:30px;background:#fff;box-shadow:0 20px 50px -24px rgba(42,37,34,.45);font-family:var(--serif);font-size:30px;white-space:nowrap;min-width:330px;height:66px;text-align:center}
-#obj .bb span{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .5s,transform .6s var(--spring)}
-#obj .a{color:var(--muted)} #obj .b{color:var(--rose);font-style:italic;opacity:0;transform:translateY(10px)}
-#obj.sw .a{opacity:0;transform:translateY(-10px)} #obj.sw .b{opacity:1;transform:none}
-#obj i{position:absolute;border-radius:50%;background:#fff;box-shadow:0 6px 14px -6px rgba(42,37,34,.35)}
-#obj i:nth-of-type(1){left:50%;top:76px;width:18px;height:18px;margin-left:-14px}
-#obj i:nth-of-type(2){left:50%;top:100px;width:10px;height:10px;margin-left:-6px}
+/* speech bubbles: belief (pillar 1) and objection (pillar 2) */
+.bub{position:absolute;top:300px;transform:translateX(-50%) scale(.8);opacity:0;transition:opacity .5s,transform .7s var(--spring);z-index:7}
+.bub.on{opacity:1;transform:translateX(-50%) scale(1)}
+#obj{left:960px} #tal{left:640px}
+.bub .bb{position:relative;padding:16px 26px;border-radius:30px;background:#fff;box-shadow:0 20px 50px -24px rgba(42,37,34,.45);font-family:var(--serif);font-size:30px;white-space:nowrap;min-width:330px;height:66px;text-align:center}
+#obj .bb span,#tal .bb span{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .5s,transform .6s var(--spring)}
+#obj .a,#tal .a{color:var(--muted)} #obj .b,#tal .b{color:var(--rose);font-style:italic;opacity:0;transform:translateY(10px)}
+#obj.sw .a,#tal.sw .a{opacity:0;transform:translateY(-10px)} #obj.sw .b,#tal.sw .b{opacity:1;transform:none}
+#obj i,#tal i{position:absolute;border-radius:50%;background:#fff;box-shadow:0 6px 14px -6px rgba(42,37,34,.35)}
+#obj i:nth-of-type(1),#tal i:nth-of-type(1){left:50%;top:76px;width:18px;height:18px;margin-left:-14px}
+#obj i:nth-of-type(2),#tal i:nth-of-type(2){left:50%;top:100px;width:10px;height:10px;margin-left:-6px}
+
+#tal .a s{text-decoration:none;background:linear-gradient(var(--rose),var(--rose)) no-repeat 0 55%/0 2px;transition:background-size .5s ease}
+#tal.st .a s{background-size:100% 2px}
+
+/* pull vs push toggle (pillar 2) */
+#sog{position:absolute;left:960px;top:248px;transform:translateX(-50%) translateY(10px);opacity:0;transition:opacity .5s,transform .7s var(--spring);z-index:7}
+#sog.on{opacity:1;transform:translateX(-50%)}
+#sog .tr{position:relative;display:grid;grid-template-columns:1fr 1fr;width:280px;height:58px;padding:5px;border-radius:99px;background:rgba(255,255,255,.9);border:1px solid #fff;box-shadow:0 18px 40px -20px rgba(42,37,34,.45)}
+#sog .kn{position:absolute;left:5px;top:5px;width:135px;height:48px;border-radius:99px;background:#5E5652;box-shadow:0 8px 18px -8px rgba(42,37,34,.6);transition:transform .8s var(--spring),background .6s}
+#sog.pull .kn{transform:translateX(135px);background:linear-gradient(135deg,var(--rose),var(--rose2));box-shadow:0 10px 26px -8px rgba(192,89,123,.8)}
+#sog b{position:relative;display:grid;place-items:center;font:600 20px var(--sans);letter-spacing:.02em;color:#fff;transition:color .5s}
+#sog b+b{color:var(--muted);font-family:var(--serif);font-style:italic;font-weight:400;font-size:27px}
+#sog.pull b{color:var(--muted)} #sog.pull b+b{color:#fff}
+
+/* crew: never alone (support) */
+.peer{position:absolute;bottom:494px;width:56px;height:112px;margin-left:-28px;transform-origin:50% 100%;transform:scale(.62) translateY(40px);opacity:0;transition:opacity .5s,transform .8s var(--spring);z-index:7}
+#world.crew .peer{opacity:1;transform:scale(.62)}
+.peer .hd{position:absolute;left:10px;top:0;width:36px;height:36px;border-radius:50%;background:var(--sk)}
+.peer .hr{position:absolute;left:6px;top:-4px;width:44px;height:26px;border-radius:24px 24px 8px 8px;background:var(--hc)}
+.peer .bd{position:absolute;left:4px;top:40px;width:48px;height:56px;border-radius:24px 24px 10px 10px;background:var(--cl)}
+.peer .lg{position:absolute;top:92px;width:12px;height:20px;border-radius:0 0 6px 6px;background:var(--ink)}
+.peer .l1{left:14px}.peer .l2{left:30px}
+#world.crew .pe2{transition-delay:.12s}#world.crew .pe3{transition-delay:.24s}#world.crew .pe4{transition-delay:.36s}
 
 /* deck */
 #deck{position:absolute;left:440px;top:586px;width:1040px;height:16px;border-radius:5px;background:linear-gradient(180deg,#fff,#E8DED6);box-shadow:0 10px 16px -10px rgba(42,37,34,.35);transform:scaleX(0);transform-origin:left;transition:transform 1s var(--cam)}
@@ -110,6 +134,8 @@ html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--san
 #me .bd{position:absolute;left:4px;top:40px;width:48px;height:56px;border-radius:24px 24px 10px 10px;background:linear-gradient(180deg,var(--rose2),var(--rose))}
 #me .lg{position:absolute;top:92px;width:12px;height:20px;border-radius:0 0 6px 6px;background:var(--ink)}
 #me .l1{left:14px}#me .l2{left:30px}
+#me::before{content:"";position:absolute;left:50%;top:56%;width:260px;height:260px;margin:-130px 0 0 -130px;border-radius:50%;background:radial-gradient(closest-side,rgba(210,121,151,.35),rgba(232,170,120,.12) 55%,transparent);opacity:0;transform:scale(.6);transition:opacity 1.2s,transform 1.6s var(--spring);pointer-events:none;z-index:-1}
+#me.glow::before{opacity:1;transform:scale(1)}
 #me .tag{position:absolute;left:50%;top:-44px;transform:translateX(-50%);white-space:nowrap;padding:5px 13px;border-radius:99px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;letter-spacing:.04em}
 #world.arrived #me .tag{background:var(--rose)}
 #world.away:not(.arrived) #me .bd{background:linear-gradient(180deg,var(--rose2),var(--rose))}
@@ -183,10 +209,13 @@ body.m #setup .row{grid-template-columns:1fr}
     <div class="pil" id="P2" style="left:960px"><div class="gh">?</div><div class="col"><div class="cap"></div><div class="sh"></div><div class="num">2</div></div></div>
     <div class="pil" id="P3" style="left:1280px"><div class="gh">?</div><div class="col"><div class="cap"></div><div class="sh"></div><div class="num">3</div></div></div>
     <div id="deck"></div>
-    <div class="chips" id="C1" style="left:660px"><span>Psychologie</span><span>Mindset</span><span>High-Ticket</span></div>
-    <div class="chips" id="C2" style="left:960px"><span>Fragen</span><span>Live-Calls</span><span>Freigabe</span></div>
-    <div class="chips" id="C3" style="left:1230px"><span>Video</span><span>Interview</span><span>closerinnen.de</span></div>
-    <div id="obj"><div class="bb"><span class="a">„Ich schlaf nochmal drüber …“</span><span class="b">„Was ist noch offen?“</span></div><i></i><i></i></div>
+    <div class="chips" id="C2" style="left:960px"><span>Fragen</span><span>Fühlen</span><span>Führen</span></div>
+    <div class="chips" id="C3" style="left:1230px"><span>Bewerbung</span><span>Interview</span><span>closerinnen.de</span></div>
+    <div class="chips" id="C4" style="left:960px"><span>Training</span><span>Coaching</span><span>Community</span></div>
+    <div class="bub" id="tal"><div class="bb"><span class="a"><s>„Verkaufen ist Talent.“</s></span><span class="b">„Verkaufen ist lernbar.“</span></div><i></i><i></i></div>
+    <div id="sog"><div class="tr"><i class="kn"></i><b>Druck</b><b>Sog</b></div></div>
+    <div class="bub" id="obj"><div class="bb"><span class="a">„Ich schlaf nochmal drüber …“</span><span class="b">„Was ist noch offen?“</span></div><i></i><i></i></div>
+    <div class="peer pe1" style="left:540px;--sk:#E9BBA2;--hc:#2E2320;--cl:linear-gradient(180deg,#E8AA78,#D98F5C)"><div class="lg l1"></div><div class="lg l2"></div><div class="bd"></div><div class="hr"></div><div class="hd"></div></div><div class="peer pe2" style="left:800px;--sk:#C99A7E;--hc:#6B4A3A;--cl:linear-gradient(180deg,#9BA9C9,#7F8FB4)"><div class="lg l1"></div><div class="lg l2"></div><div class="bd"></div><div class="hr"></div><div class="hd"></div></div><div class="peer pe3" style="left:1120px;--sk:#F3D2C0;--hc:#C79A5B;--cl:linear-gradient(180deg,#D27997,#B9587A)"><div class="lg l1"></div><div class="lg l2"></div><div class="bd"></div><div class="hr"></div><div class="hd"></div></div><div class="peer pe4" style="left:1390px;--sk:#A97A5E;--hc:#1F1714;--cl:linear-gradient(180deg,#B9A3D6,#9A82C0)"><div class="lg l1"></div><div class="lg l2"></div><div class="bd"></div><div class="hr"></div><div class="hd"></div></div>
     <div id="me"><div class="tag" id="mTag"></div><div class="lg l1"></div><div class="lg l2"></div><div class="bd"></div><div class="hr"></div><div class="hd"></div></div>
     <div id="conf"></div>
   </div></div>
@@ -211,11 +240,12 @@ body.m #setup .row{grid-template-columns:1fr}
 <script>
 const $ = id => document.getElementById(id);
 const world = $('world'), hud = $('hud'), me = $('me');
-const N = 9;
-const COLOR = [0, 0, .10, .18, .38, .60, .70, .86, 1];
+const N = 8, LAST = 7;
+const COLOR = [.04, .12, .35, .55, .65, .80, .90, 1];
 const X = {start:360, p1:640, p2:960, p3:1280, goal:1600};
-const posFor = s => s <= 3 ? 'start' : s === 4 ? 'p1' : s <= 6 ? 'p2' : s === 7 ? 'p3' : 'goal';
-const CAM = ['wide', [235,460,1.9], [1680,410,1.8], 'wide', [640,450,1.75], [960,450,1.75], [960,420,2.05], [1260,450,1.75], [1420,430,1.3]];
+const posFor = s => s <= 1 ? 'start' : s === 2 ? 'p1' : s <= 4 ? 'p2' : s <= 6 ? 'p3' : 'goal';
+const CAM = ['wide', 'wide', [640,450,1.75], [960,450,1.75], [960,420,2.05], [1260,450,1.75], 'crew', [1420,430,1.3]];
+const JUMPS = [2, 3, 5];
 let D = {n:'', p:'', g:'', w:''};
 let step = 0, timers = [], ax = X.start, W = 1920, H = 1080, mob = false;
 const T = (ms, fn) => timers.push(setTimeout(fn, ms));
@@ -243,14 +273,13 @@ const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','
 function hudFor(s) {
   const n = esc(nm());
   return [
-    ['Dein Weg', `${n}, <em>von hier nach da.</em>`, ''],
-    ['Heute', 'Hier stehst <em>du.</em>', ''],
-    ['Dein Ziel', 'Da willst <em>du hin.</em>', ''],
+    ['Dein Weg', `${n}, <em>von hier nach da.</em>`, '3 Monate · 3 Schritte'],
     ['', 'Was fehlt <em>dazwischen?</em>', ''],
-    ['Schritt 1', 'Sales-<em>Fundament</em>', 'Kann ich das? Ja.'],
-    ['Schritt 2', 'Verkaufs-<em>gespräch</em>', 'Fragen statt überreden.'],
-    ['Einwand', 'Jetzt <em>klären.</em>', 'Nicht morgen.'],
-    ['Schritt 3', 'Stelle <em>finden</em>', 'Vorbereitet bewerben.'],
+    ['Schritt 1', 'Sales-<em>Fundament</em>', 'Erfolg beginnt im Kopf.'],
+    ['Schritt 2', 'Sog statt <em>Druck.</em>', 'Sie will. Du drückst nicht.'],
+    ['Einwand', 'Dran <em>bleiben.</em>', 'Mit Gefühl, ohne Druck.'],
+    ['Schritt 3', 'Die <em>Stelle</em>', 'Gute Unternehmen finden.'],
+    ['12 Wochen', 'Nie <em>allein.</em>', ''],
     ['Angekommen', isNum() ? `Bringt dich das zu deinen <em>${esc(amt())}?</em>` : 'Bringt dich das zu <em>deinem Ziel?</em>', esc((D.w || '').trim())]
   ][s];
 }
@@ -260,7 +289,7 @@ function showHud(s, delay) {
     const [k, h, p] = hudFor(s);
     hud.querySelector('.k').textContent = k; const h1 = hud.querySelector('h1'); h1.innerHTML = h; words(h1);
     const pe = hud.querySelector('p'); pe.innerHTML = p; pe.classList.remove('in'); void pe.offsetWidth; pe.classList.add('in');
-    hud.classList.toggle('wide', CAM[s] === 'wide');
+    hud.classList.toggle('wide', CAM[s] === 'wide' || CAM[s] === 'crew');
     hud.classList.remove('out');
   });
 }
@@ -269,6 +298,7 @@ function setCam(c, dur) {
   let x, y, s, a;
   const sk = mob ? .56 : 1;
   if (c === 'wide') { x = 950; y = 430; s = .97 * sk; a = [W / 2, mob ? H * .58 : 650]; }
+  else if (c === 'crew') { x = 960; y = 470; s = (mob ? .98 : 1.22); a = [W / 2, mob ? H * .62 : 700]; }
   else { [x, y, s] = c; s *= mob ? .9 : 1; a = mob ? [W / 2, H * .58] : [W * .65, 560]; }
   world.style.transition = dur ? `transform ${dur}ms var(--cam)` : 'none';
   world.style.transform = `translate(${a[0] - x * s}px,${a[1] - y * s}px) scale(${s})`;
@@ -286,12 +316,12 @@ function jump(x2, dur = 950, hgt = 170) {
   me.style.transform = `translateX(${x2}px)`;
 }
 function pillars(s) {
-  [[1,4],[2,5],[3,7]].forEach(([i, from]) => $('P' + i).classList.toggle('up', s >= from));
-  [[1,4],[2,5],[3,7]].forEach(([i]) => $('P' + i).classList.toggle('f', (i === 1 && s === 4) || (i === 2 && (s === 5 || s === 6)) || (i === 3 && s === 7)));
+  [[1,2],[2,3],[3,5]].forEach(([i, from]) => $('P' + i).classList.toggle('up', s >= from));
+  [[1,2],[2,3],[3,5]].forEach(([i]) => $('P' + i).classList.toggle('f', (i === 1 && s === 2) || (i === 2 && (s === 3 || s === 4)) || (i === 3 && s === 5)));
 }
 function chips(s) {
-  [1,2,3].forEach(i => $('C' + i).classList.remove('on'));
-  const i = s === 4 ? 1 : s === 5 ? 2 : s === 7 ? 3 : 0;
+  [2,3,4].forEach(i => $('C' + i).classList.remove('on'));
+  const i = s === 5 ? 3 : s === 6 ? 4 : 0;
   return i ? $('C' + i) : null;
 }
 function confetti() {
@@ -317,16 +347,18 @@ function go(s, animate = true) {
   document.querySelectorAll('#dots i').forEach((d, i) => d.classList.toggle('on', i === step));
   const fwd = animate && step === prev + 1;
   bloomFor(step, fwd, animate);
-  world.classList.toggle('ghost', step === 3);
-  world.classList.toggle('away', step >= 4);
-  world.classList.toggle('dimg', [1,4,5,6,7].includes(step));
+  world.classList.toggle('ghost', step === 1);
+  world.classList.toggle('away', step >= 2);
+  world.classList.toggle('dimg', [2,3,4,5].includes(step));
   world.classList.remove('arrived');
-  world.classList.toggle('deck', step >= 8 && !fwd);
-  $('obj').classList.remove('on', 'sw');
+  world.classList.toggle('deck', step >= 6 && !(fwd && step === 6));
+  world.classList.toggle('crew', step >= 6 && !(fwd && step === 6));
+  ['obj','tal'].forEach(id => $(id).classList.remove('on', 'sw', 'st'));
+  $('sog').classList.remove('on', 'pull'); SOG = false; me.classList.remove('glow');
   const ch = chips(step);
   const target = X[posFor(step)];
 
-  if (fwd && [4,5,7].includes(step)) {
+  if (fwd && JUMPS.includes(step)) {
     const midx = (ax + target) / 2;
     pillars(step - 1);
     setCam([midx, 470, 1.15], 950);
@@ -336,24 +368,28 @@ function go(s, animate = true) {
     T(2200, () => setCam(CAM[step], 1300));
     showHud(step, 2450);
     T(2900, () => ch && ch.classList.add('on'));
-  } else if (fwd && step === 8) {
+  } else if (fwd && step === LAST) {
     pillars(step);
     setCam('wide', 1100);
     hud.classList.add('out');
-    T(500, () => world.classList.add('deck'));
-    T(1500, () => jump(target, 1150, 230));
-    T(2650, () => { confetti(); world.classList.add('arrived'); });
-    T(3300, () => setCam(CAM[8], 1400));
-    showHud(step, 3600);
+    T(1200, () => jump(target, 1150, 230));
+    T(2350, () => { confetti(); world.classList.add('arrived'); });
+    T(3000, () => setCam(CAM[LAST], 1400));
+    showHud(step, 3300);
   } else {
     pillars(step);
     if (ax !== target) place(target);
     setCam(CAM[step], animate ? 1300 : 0);
     showHud(step, animate ? 500 : 0);
     if (ch) T(animate ? 1100 : 0, () => ch.classList.add('on'));
-    if (step === 8) T(animate ? 900 : 0, () => { confetti(); world.classList.add('arrived'); });
+    if (step === LAST) T(animate ? 900 : 0, () => { confetti(); world.classList.add('arrived'); });
+    if (fwd && step === 6) { T(500, () => world.classList.add('deck')); T(1300, () => world.classList.add('crew')); }
   }
-  if (step === 6) { T(500, () => $('obj').classList.add('on')); T(2200, () => $('obj').classList.add('sw')); }
+  // per-step micro-timelines; a jump lands at ~2.3 s, so beats start later when she just jumped
+  const b = fwd && JUMPS.includes(step) ? 2700 : animate ? 500 : 0, q = animate ? 1 : 0;
+  if (step === 2) { T(b, () => $('tal').classList.add('on')); T(b + 1300 * q, () => $('tal').classList.add('st')); T(b + 1900 * q, () => $('tal').classList.add('sw')); }
+  if (step === 3) { T(b, () => $('sog').classList.add('on')); T(b + 1100 * q, () => { $('sog').classList.add('pull'); SOG = true; me.classList.add('glow'); }); T(b + 2200 * q, () => $('C2').classList.add('on')); }
+  if (step === 4) { T(b, () => $('obj').classList.add('on')); T(b + 1700 * q, () => $('obj').classList.add('sw')); }
 }
 
 function fit() {
@@ -407,20 +443,22 @@ function words(el) {
 }
 
 // ---- Colour field: radius (world px) of the colour pocket around her (A) and around the goal (G) ----
-const RA = [0, 0, 0, 0, 230, 380, 430, 620, 620], RG = [0, 0, 290, 290, 290, 290, 290, 290, 290], FULL = 4200;
+const RA = [0, 0, 230, 380, 430, 620, 1150, 1150], RG = [290, 290, 290, 290, 290, 290, 290, 290], FULL = 4200;
+let SOG = false;
 const BL = {a:0, g:0, ta:0, tg:0, p:[0,0,0], tp:[0,0,0]};
-const PUP = [4, 5, 7], PR = 210;
+const PUP = [2, 3, 5], PR = 210;
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const HAS_BD = CSS.supports('backdrop-filter', 'grayscale(1)') || CSS.supports('-webkit-backdrop-filter', 'grayscale(1)');
 function bloomFor(s, fwd, animate) {
   let ta = RA[s], tg = RG[s], delay = 0;
-  if (s === 8) { ta = tg = FULL; delay = fwd ? 2650 : 600; }
-  else if (fwd && [4,5,7].includes(s)) delay = 2250;      // colour arrives when she lands
+  if (s === LAST) { ta = tg = FULL; delay = fwd ? 2350 : 600; }
+  else if (fwd && JUMPS.includes(s)) delay = 2250;
+  else if (fwd && s === 6) delay = 700;      // colour arrives when she lands
   const tp = PUP.map(f => s >= f ? PR : 0);
   if (!animate) { BL.ta = BL.a = ta; BL.tg = BL.g = tg; BL.tp = tp.slice(); BL.p = tp.slice(); return; }
   BL.tp = BL.tp.map((v, i) => tp[i] < v ? 0 : v);
   T(delay, () => { BL.tp = tp; });
-  if (s !== 8) BL.tg = tg;
+  if (s !== LAST) BL.tg = tg;
   if (delay) T(delay, () => { BL.ta = ta; BL.tg = tg; }); else BL.ta = ta;
 }
 
@@ -462,7 +500,7 @@ function sprite(col) {
 }
 const SPR = ['rgba(210,121,151,.9)', 'rgba(232,170,120,.9)', 'rgba(255,214,226,.95)', 'rgba(192,89,123,.8)'].map(sprite), WHITE = sprite('rgba(255,255,255,.95)');
 function seed() {
-  motes = Array.from({length: mob ? 40 : 60}, () => ({x: Math.random() * W, y: Math.random() * H, z: .3 + Math.random() * .9,
+  motes = Array.from({length: mob ? 45 : 70}, () => ({x: Math.random() * W, y: Math.random() * H, z: .3 + Math.random() * .9,
     s: SPR[Math.random() * SPR.length | 0], r: 6 + Math.random() * 18, ph: Math.random() * 6.28, a: .2 + Math.random() * .45}));
 }
 function sizeFX() {
@@ -483,7 +521,7 @@ function ring(el, x, y, r, v) {
   el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.width = el.style.height = (2 * r) + 'px';
   el.style.opacity = r < 2 || r > 2600 ? 0 : Math.min(.9, v / 70);
 }
-let last = performance.now();
+let last = performance.now(), SG = 0;
 function frame(t) {
   const dt = Math.min(.05, (t - last) / 1000); last = t;
   const e = RM ? 1 : 1 - Math.exp(-dt * 2.4);
@@ -494,10 +532,12 @@ function frame(t) {
   PX.x += ((live ? PXT.x : 0) - PX.x) * (1 - Math.exp(-dt * 3)); PX.y += ((live ? PXT.y : 0) - PX.y) * (1 - Math.exp(-dt * 3));
   par.style.transform = `translate3d(${(-PX.x * 10).toFixed(2)}px,${(-PX.y * 7).toFixed(2)}px,0)`;
   const sr = stg.getBoundingClientRect(), k = sr.width / W;
+  const mr = me.getBoundingClientRect();
+  const ax2 = (mr.left + mr.width / 2 - sr.left) / k, ay2 = (mr.top + mr.height * .55 - sr.top) / k;
+  SG += ((SOG && !RM ? 1 : 0) - SG) * (1 - Math.exp(-dt * 1.6));
   if (HAS_BD) {
     const s = cR.getBoundingClientRect().width / k / 760;
-    const mr = me.getBoundingClientRect(), gr = goalEl.getBoundingClientRect();
-    const ax2 = (mr.left + mr.width / 2 - sr.left) / k, ay2 = (mr.top + mr.height * .55 - sr.top) / k;
+    const gr = goalEl.getBoundingClientRect();
     const gx = (gr.left + gr.width / 2 - sr.left) / k, gy = (gr.top + gr.height * .6 - sr.top) / k;
     const ra = BL.a * s, rg = BL.g * s, f = 80 * s;
     let holes = hole(ax2, ay2, ra, f) + ',' + hole(gx, gy, rg, f);
@@ -511,12 +551,26 @@ function frame(t) {
   if (gl) { gl.uniform2f(uR, aur.width, aur.height); gl.uniform1f(uT, t / 1000); gl.uniform1f(uW, w); gl.uniform2f(uM, PX.x, -PX.y); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
   mx.clearRect(0, 0, W, H);
   for (const m of motes) {
-    m.y -= (5 + 16 * m.z * (1 + w)) * dt; m.x += Math.sin(t / 2600 + m.ph) * 6 * m.z * dt;
+    m.y -= (5 + 16 * m.z * (1 + w)) * dt * (1 - SG); m.x += Math.sin(t / 2600 + m.ph) * 6 * m.z * dt * (1 - SG);
+    let near = 1;
+    if (SG > .01) {                       // Sog: the room drifts toward her, spiralling in
+      const vx = ax2 - m.x, vy = ay2 - m.y, d = Math.hypot(vx, vy) || 1, sp = (55 + 300 / Math.sqrt(d / 60 + 1)) * m.z * SG;
+      m.x += (vx / d * sp - vy / d * sp * .35) * dt; m.y += (vy / d * sp + vx / d * sp * .35) * dt;
+      near = Math.min(1, d / 90);
+      if (d < 26) { const e2 = Math.random() * 4 | 0; m.x = e2 === 0 ? -40 : e2 === 1 ? W + 40 : Math.random() * W; m.y = e2 > 1 ? (e2 === 2 ? -40 : H + 40) : Math.random() * H; }
+    }
     if (m.y < -50) { m.y = H + 50; m.x = Math.random() * W; }
-    const sz = m.r * m.z * 2;
-    const al = m.a * (.55 + .45 * Math.sin(t / 1100 + m.ph)), dx = m.x - PX.x * 34 * m.z - sz / 2, dy = m.y - PX.y * 22 * m.z - sz / 2;
+    const sz = m.r * m.z * 2 * (.4 + .6 * near) * (1 + SG * .3);
+    const al = m.a * (.55 + .45 * Math.sin(t / 1100 + m.ph)) * (1 + SG * .9) * near, dx = m.x - PX.x * 34 * m.z - sz / 2, dy = m.y - PX.y * 22 * m.z - sz / 2;
     mx.globalAlpha = al * (1 - w) * .8; mx.drawImage(WHITE, dx, dy, sz, sz);   // monochrome: pure light
-    mx.globalAlpha = al * w; mx.drawImage(m.s, dx, dy, sz, sz);                  // colour returns with the story
+    mx.globalAlpha = Math.min(1, al * (w * .45 + SG * .7)); mx.drawImage(m.s, dx, dy, sz, sz); // colour returns with the story
+    if (SG > .05 && m.z > .75) {                                                  // Sog: a few fine light threads stream toward her
+      const vx = ax2 - m.x, vy = ay2 - m.y, d = Math.hypot(vx, vy) || 1, L = Math.min(70, 18 + d * .09) * m.z * SG;
+      const x0 = dx + sz / 2, y0 = dy + sz / 2, x1 = x0 - (vx / d - vy / d * .35) * L, y1 = y0 - (vy / d + vx / d * .35) * L;
+      const g = mx.createLinearGradient(x0, y0, x1, y1); g.addColorStop(0, 'rgba(192,89,123,.38)'); g.addColorStop(1, 'rgba(210,121,151,0)');
+      mx.globalAlpha = Math.min(.8, al * SG * near); mx.strokeStyle = g; mx.lineWidth = Math.max(.8, sz * .1); mx.lineCap = 'round';
+      mx.beginPath(); mx.moveTo(x0, y0); mx.lineTo(x1, y1); mx.stroke();
+    }
   }
   requestAnimationFrame(frame);
 }
